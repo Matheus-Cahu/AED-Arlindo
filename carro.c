@@ -1,19 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct Carro{
-int chegada;
-int saida;
-struct Carro *next;
+typedef struct Carro {
+    int chegada;
+    int saida;
+    struct Carro *next;
+} Carro;
 
-}Carro;
-
-Carro* createCarro(int chegada,int saida){
-Carro *newCarro = (Carro*)malloc(sizeof(Carro));
-newCarro->chegada = chegada;
-newCarro->saida = saida;
-newCarro->next = NULL;
-return newCarro;
+Carro* createCarro(int chegada, int saida) {
+    Carro *newCarro = (Carro*)malloc(sizeof(Carro));
+    newCarro->chegada = chegada;
+    newCarro->saida = saida;
+    newCarro->next = NULL;
+    return newCarro;
 }
 
 void addCarro(Carro **head, int chegada, int saida) {
@@ -49,7 +48,6 @@ int verificarHora(Carro *head) {
     return 0;  // Nenhum bloqueio de saída encontrado
 }
 
-
 int verificarNr(Carro *head, int k) {
     Carro *current = head;
     
@@ -73,28 +71,36 @@ int verificarNr(Carro *head, int k) {
     return 0;  // Retorna 0 se o limite de carros simultâneos não foi ultrapassado
 }
 
-
-void printLista(Carro *head){
+void printLista(Carro *head) {
     Carro *current = head;
-    while(current != NULL){
+    while (current != NULL) {
         printf("\n%d %d", current->chegada, current->saida);
         current = current->next;
     }
 }
 
-int main(){
-    int n ,k;
+int main() {
+    int n, k;
     scanf("%d", &n);
     scanf("%d", &k);
+    
     Carro *head = NULL;
-    for(int i = 0; i<n; i++){
-    int ci, si;
-    scanf("%d %d", &ci, &si);
-    addCarro(&head, ci,si);
+    
+    for (int i = 0; i < n; i++) {
+        int ci, si;
+        scanf("%d %d", &ci, &si);
+        addCarro(&head, ci, si);
     }
-    if(verificarHora(head) == 1)printf("Não");
-    else if(verificarNr(head, k) == 1)printf("Não");
-    else printf("Sim");
+    
+    if (verificarHora(head) == 1) {
+        printf("Não");
+    } else if (verificarNr(head, k) == 1) {
+        printf("Não");
+    } else {
+        printf("Sim");
+    }
+    
     printLista(head);
+    
     return 0;
 }
